@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "hD37I7pcdW5z0o5rPixfAlWfyK8mwrkGuDt+wStFY+w=",
+  "Source": "MRV.Leads.Api",
+  "BasePath": "_content/MRV.Leads.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
