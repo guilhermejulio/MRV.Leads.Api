@@ -6,27 +6,28 @@ namespace MRV.Leads.Api.Controllers.Leads.Create;
 
 public class CreateController : BaseController
 {
-    private static List<Lead> leads = new List<Lead>
+    private readonly DataContext _context;
+
+    public CreateController(DataContext context)
     {
-        new Lead
-        {
-            Id = Guid.NewGuid(),
-            Name = "Gui",
-            Suburb = "Ibirité",
-            ZipCode = "324242",
-            Category = "Developer",
-            Description = "Web developer",
-            Price = 52,
-            Status = new LeadStatus(),
-            CreatedAt = default,
-            UpdatedAt = default
-        }
-    };
+        _context = context;
+    }
     [HttpPost("[controller]")]
-    public async Task<ActionResult<List<Lead>>> CreateLead(Lead lead)
+    public async Task<ActionResult<Lead>> CreateLead(RequestSet request)
     {
-        leads.Add(lead);
-        return Ok(leads);
+        Lead lead = new Lead
+        {
+            Name = request.Name,
+            Suburb = request.Suburb,
+            ZipCode = request.ZipCode,
+            Category = request.Category,
+            Description = request.Description,
+            Price = request.Price,
+            Status = _context.LeadStatus.FirstOrDefault(l => l.Name == "Created"),
+        };
+        _context.Leads.Add(lead);
+        await _context.SaveChangesAsync();
+        return Ok(lead);
     }
     
 }

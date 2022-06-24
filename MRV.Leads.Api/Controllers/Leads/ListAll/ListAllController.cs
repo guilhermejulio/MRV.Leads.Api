@@ -3,29 +3,33 @@ using MRV.Leads.Api.Models;
 
 namespace MRV.Leads.Api.Controllers.Leads.ListAll;
 
-
 public class ListAllController : BaseController
 {
-    private static List<Lead> leads = new List<Lead>
+    private readonly DataContext _context;
+
+    public ListAllController(DataContext context)
     {
-        new Lead
-        {
-            Id = Guid.NewGuid(),
-            Name = "Gui",
-            Suburb = "Ibirité",
-            ZipCode = "324242",
-            Category = "Developer",
-            Description = "Web developer",
-            Price = 52,
-            Status = new LeadStatus(),
-            CreatedAt = default,
-            UpdatedAt = default
-        }
-    };
+        _context = context;
+    }
+
     [HttpGet("[controller]")]
     public async Task<ActionResult<List<Lead>>> Get()
     {
-        return Ok(leads);
+        return Ok(await _context.Leads
+            .Join(_context.LeadStatus, lead => lead.Status.Id, status => status.Id,
+                (lead, status) => new
+                {
+                    LeadId = lead.Id,
+                    LeadName = lead.Name,
+                    LeadSuburb = lead.Suburb,
+                    LeadZipCode = lead.ZipCode,
+                    LeadCategory = lead.Category,
+                    LeadDescription = lead.Description,
+                    LeadPrice = lead.Price,
+                    LeadCreatedAt = lead.CreatedAt,
+                    LeadUpdatedAt = lead.UpdatedAt,
+                    StatusId = status.Id,
+                    StatusName = status.Name,
+                }).ToListAsync());
     }
-    
 }

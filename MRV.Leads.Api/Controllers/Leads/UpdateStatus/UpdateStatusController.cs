@@ -6,68 +6,40 @@ namespace MRV.Leads.Api.Controllers.Leads.UpdateStatus;
 
 public class UpdateStatusController : BaseController
 {
-    private static List<Lead> leads = new List<Lead>
+    private readonly DataContext _context;
+
+    public UpdateStatusController(DataContext context)
     {
-        new Lead
-        {
-            Id = Guid.NewGuid(),
-            Name = "Gui",
-            Suburb = "Ibirité",
-            ZipCode = "324242",
-            Category = "Developer",
-            Description = "Web developer",
-            Price = 52,
-            Status = new LeadStatus(),
-            CreatedAt = default,
-            UpdatedAt = default
-        }
-    };
-    
-    private static List<LeadStatus> leadsStatus = new List<LeadStatus>
-    {
-        new LeadStatus
-        {
-            Id = Guid.NewGuid(),
-            Name = "Created"
-        },
-        new LeadStatus
-        {
-            Id = Guid.NewGuid(),
-            Name = "Accepted"
-        },
-        new LeadStatus
-        {
-            Id = Guid.NewGuid(),
-            Name = "Declined"
-        }
-    };
-    
+        _context = context;
+    }
     [HttpPut("[controller]/accept/{id}")]
-    public async Task<ActionResult<Lead>> AcceptLead(Guid id)
+    public async Task<ActionResult<Lead>> AcceptLead(int id)
     {
-        var lead = leads.Find(x => x.Id == id);
+        var lead = await _context.Leads.FindAsync(id);
         if (lead == null)
         {
             return BadRequest("Lead not found");
         }
-
-        var newStatus = leadsStatus.Find(x => x.Name == "Accepted");
-        lead.Status = newStatus;
+        var acceptedStatus = _context.LeadStatus.FirstOrDefault(l => l.Name == "Accepted");
+        lead.Status = acceptedStatus;
+        lead.UpdatedAt = DateTime.Now;
+        await _context.SaveChangesAsync();
 
         return Ok(lead);
     }
     
     [HttpPut("[controller]/decline/{id}")]
-    public async Task<ActionResult<Lead>> DeclineLead(Guid id)
+    public async Task<ActionResult<Lead>> DeclineLead(int id)
     {
-        var lead = leads.Find(x => x.Id == id);
+        var lead = await _context.Leads.FindAsync(id);
         if (lead == null)
         {
             return BadRequest("Lead not found");
         }
-
-        var newStatus = leadsStatus.Find(x => x.Name == "Declined");
-        lead.Status = newStatus;
+        var acceptedStatus = _context.LeadStatus.FirstOrDefault(l => l.Name == "Declined");
+        lead.Status = acceptedStatus;
+        lead.UpdatedAt = DateTime.Now;
+        await _context.SaveChangesAsync();
 
         return Ok(lead);
     }

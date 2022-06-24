@@ -6,5 +6,4 @@ namespace MRV.Leads.Api.Controllers.Leads;
 [Route("api/leads")]
 public abstract class BaseController : ControllerBase
 {
-    
 }
