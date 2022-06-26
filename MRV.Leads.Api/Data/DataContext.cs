@@ -17,5 +17,11 @@ public class DataContext : DbContext
         modelBuilder.Entity<Lead>()
             .Property(b => b.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        modelBuilder.Entity<Lead>().Property(b => b.UpdatedAt)
+            .ValueGeneratedOnAddOrUpdate()
+            .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Save);
+        modelBuilder.Entity<Lead>()
+            .Property(b => b.FullName)
+            .HasComputedColumnSql("[Name] + ' ' + [LastName]");
     }
 }

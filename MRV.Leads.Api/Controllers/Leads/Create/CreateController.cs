@@ -17,12 +17,15 @@ public class CreateController : BaseController
     {
         Lead lead = new Lead
         {
-            Name = request.Name,
+            Name = request.FirstName,
+            LastName = request.LastName,
             Suburb = request.Suburb,
             ZipCode = request.ZipCode,
             Category = request.Category,
             Description = request.Description,
             Price = request.Price,
+            PhoneNumber = request.PhoneNumber,
+            EmailAddress = request.EmailAddress,
             Status = _context.LeadStatus.FirstOrDefault(l => l.Name == "Created"),
         };
         _context.Leads.Add(lead);

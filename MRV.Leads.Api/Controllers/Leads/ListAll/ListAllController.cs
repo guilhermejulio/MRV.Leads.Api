@@ -20,7 +20,7 @@ public class ListAllController : BaseController
                 (lead, status) => new
                 {
                     LeadId = lead.Id,
-                    LeadName = lead.Name,
+                    LeadFirstName = lead.Name,
                     LeadSuburb = lead.Suburb,
                     LeadZipCode = lead.ZipCode,
                     LeadCategory = lead.Category,
