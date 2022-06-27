@@ -35,8 +35,4 @@
       <Content Remove="Utils\**" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers\Leads\Communication" />
-    </ItemGroup>
-
 </Project>

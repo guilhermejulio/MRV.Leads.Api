@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 using MRV.Leads.Api.Models;
 
 namespace MRV.Leads.Api.Controllers.Leads.GetById;
