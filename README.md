@@ -45,5 +45,10 @@ Rotas:
 <br/>
 Caso queira rodar a aplicação local utilize os comandos:
 
+## Banco de dados
+
+<br/>
+O banco de dados usado é o SQL Server, também está hospedado na Azure.
+
 - dotnet build
 - dotnet run
