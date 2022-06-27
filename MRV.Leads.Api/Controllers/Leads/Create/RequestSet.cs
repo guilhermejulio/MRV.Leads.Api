@@ -2,13 +2,13 @@
 
 public class RequestSet
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Suburb { get; set; }
-    public string ZipCode { get; set; }
-    public string Category { get; set; }
-    public string Description { get; set; }
-    public string PhoneNumber { get; set; }
-    public string EmailAddress { get; set; }
-    public decimal Price { get; set; }
+    public string LeadFirstName { get; set; }
+    public string LeadLastName { get; set; }
+    public string LeadSuburb { get; set; }
+    public string LeadZipCode { get; set; }
+    public string LeadCategory { get; set; }
+    public string LeadDescription { get; set; }
+    public string LeadPhoneNumber { get; set; }
+    public string LeadEmailAddress { get; set; }
+    public decimal LeadPrice { get; set; }
 }
