@@ -1,6 +1,6 @@
 ﻿namespace MRV.Leads.Api.Controllers.Leads.Create;
 
-public class RequestSet
+public class InviteRequestSet
 {
     public string LeadFirstName { get; set; }
     public string LeadLastName { get; set; }

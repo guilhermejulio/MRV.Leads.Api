@@ -13,7 +13,7 @@ public class UpdateStatusController : BaseController
         _context = context;
     }
     [HttpPut("[controller]/accept/{id}")]
-    public async Task<ActionResult<Lead>> AcceptLead(int id)
+    public async Task<ActionResult<AcceptResponse>> AcceptLead(int id)
     {
         var lead = await _context.Leads.FindAsync(id);
         if (lead == null)
@@ -25,7 +25,22 @@ public class UpdateStatusController : BaseController
         lead.UpdatedAt = DateTime.Now;
         await _context.SaveChangesAsync();
 
-        return Ok(lead);
+        return Ok(new AcceptResponse
+        {
+            LeadId = lead.Id,
+            LeadFullName= lead.FullName,
+            LeadSuburb = lead.Suburb,
+            LeadZipCode = lead.ZipCode,
+            LeadCategory = lead.Category,
+            LeadDescription = lead.Description,
+            LeadPhoneNumber = lead.PhoneNumber,
+            LeadEmailAddress = lead.EmailAddress,
+            LeadPrice = lead.Price,
+            LeadCreatedAt = lead.CreatedAt,
+            LeadUpdatedAt = lead.UpdatedAt,
+            StatusId = acceptedStatus.Id,
+            StatusName = acceptedStatus.Name,
+        });
     }
     
     [HttpPut("[controller]/decline/{id}")]
@@ -41,7 +56,6 @@ public class UpdateStatusController : BaseController
         lead.UpdatedAt = DateTime.Now;
         await _context.SaveChangesAsync();
 
-        return Ok(lead);
+        return NoContent();
     }
-    
 }

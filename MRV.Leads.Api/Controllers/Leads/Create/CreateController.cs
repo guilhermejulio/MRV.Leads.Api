@@ -13,7 +13,7 @@ public class CreateController : BaseController
         _context = context;
     }
     [HttpPost("[controller]")]
-    public async Task<ActionResult<Response>> CreateLead(RequestSet request)
+    public async Task<ActionResult<InviteResponse>> CreateLead(InviteRequestSet request)
     {
         Lead lead = new Lead
         {
@@ -32,7 +32,7 @@ public class CreateController : BaseController
         await _context.SaveChangesAsync();
         
         
-        return Ok(new Response
+        return Ok(new InviteResponse
         {
             LeadId = lead.Id,
             LeadFirstName = lead.Name,

@@ -23,10 +23,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\Leads\Communication" />
-    </ItemGroup>
-
-    <ItemGroup>
       <EmbeddedResource Remove="Utils\**" />
     </ItemGroup>
 
@@ -36,6 +32,10 @@
 
     <ItemGroup>
       <Content Remove="Utils\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers\Leads\Communication" />
     </ItemGroup>
 
 </Project>
