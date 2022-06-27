@@ -18,7 +18,8 @@ public class GetStatisticsController : BaseController
             l.Status.Id == (_context.LeadStatus.FirstOrDefault(l => l.Name == "Accepted").Id));
         statistic.RejectLeads = _context.Leads.Count(l =>
             l.Status.Id == (_context.LeadStatus.FirstOrDefault(l => l.Name == "Declined").Id));
-        statistic.InviteLeads = _context.Leads.Count();
+        statistic.InviteLeads = _context.Leads.Count(l =>
+            l.Status.Id == (_context.LeadStatus.FirstOrDefault(l => l.Name == "Created").Id));
 
         return Ok(statistic);
     }
