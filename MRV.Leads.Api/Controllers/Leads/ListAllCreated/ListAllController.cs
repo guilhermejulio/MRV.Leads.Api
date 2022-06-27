@@ -30,6 +30,6 @@ public class ListAllCreatedController : BaseController
                     LeadUpdatedAt = lead.UpdatedAt,
                     StatusId = status.Id,
                     StatusName = status.Name,
-                }).Where(l => l.StatusName == "Created").ToListAsync());
+                }).Where(l => l.StatusName == "Created").OrderByDescending(l => l.LeadCreatedAt).ToListAsync());
     }
 }
