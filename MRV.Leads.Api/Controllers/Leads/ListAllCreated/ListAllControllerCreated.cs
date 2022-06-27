@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MRV.Leads.Api.Models;
 
-namespace MRV.Leads.Api.Controllers.Leads.ListAll;
+namespace MRV.Leads.Api.Controllers.Leads.ListAllCreated;
 
 public class ListAllCreatedController : BaseController
 {
