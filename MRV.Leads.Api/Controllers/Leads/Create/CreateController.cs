@@ -15,6 +15,12 @@ public class CreateController : BaseController
     [HttpPost("[controller]")]
     public async Task<ActionResult<InviteResponse>> CreateLead(InviteRequestSet request)
     {
+        decimal discount = 0;
+        if (request.LeadPrice > 500)
+        {
+            discount = request.LeadPrice * (decimal)0.10;
+            request.LeadPrice -= discount;
+        }
         Lead lead = new Lead
         {
             Name = request.LeadFirstName,
@@ -24,6 +30,7 @@ public class CreateController : BaseController
             Category = request.LeadCategory,
             Description = request.LeadDescription,
             Price = request.LeadPrice,
+            Discount = discount,
             PhoneNumber = request.LeadPhoneNumber,
             EmailAddress = request.LeadEmailAddress,
             Status = _context.LeadStatus.FirstOrDefault(l => l.Name == "Created"),
