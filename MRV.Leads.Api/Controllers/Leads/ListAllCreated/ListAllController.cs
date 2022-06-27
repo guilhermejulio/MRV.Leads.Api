@@ -3,11 +3,11 @@ using MRV.Leads.Api.Models;
 
 namespace MRV.Leads.Api.Controllers.Leads.ListAll;
 
-public class ListAllController : BaseController
+public class ListAllCreatedController : BaseController
 {
     private readonly DataContext _context;
 
-    public ListAllController(DataContext context)
+    public ListAllCreatedController(DataContext context)
     {
         _context = context;
     }
@@ -30,6 +30,6 @@ public class ListAllController : BaseController
                     LeadUpdatedAt = lead.UpdatedAt,
                     StatusId = status.Id,
                     StatusName = status.Name,
-                }).ToListAsync());
+                }).Where(l => l.StatusName == "Created").ToListAsync());
     }
 }

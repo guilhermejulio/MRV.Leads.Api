@@ -13,7 +13,7 @@ public class CreateController : BaseController
         _context = context;
     }
     [HttpPost("[controller]")]
-    public async Task<ActionResult<Lead>> CreateLead(RequestSet request)
+    public async Task<ActionResult<List<Lead>>> CreateLead(RequestSet request)
     {
         Lead lead = new Lead
         {
@@ -30,7 +30,24 @@ public class CreateController : BaseController
         };
         _context.Leads.Add(lead);
         await _context.SaveChangesAsync();
-        return Ok(lead);
+        
+        
+        return Ok(await _context.Leads
+            .Join(_context.LeadStatus, lead => lead.Status.Id, status => status.Id,
+                (lead, status) => new
+                {
+                    LeadId = lead.Id,
+                    LeadFirstName = lead.Name,
+                    LeadSuburb = lead.Suburb,
+                    LeadZipCode = lead.ZipCode,
+                    LeadCategory = lead.Category,
+                    LeadDescription = lead.Description,
+                    LeadPrice = lead.Price,
+                    LeadCreatedAt = lead.CreatedAt,
+                    LeadUpdatedAt = lead.UpdatedAt,
+                    StatusId = status.Id,
+                    StatusName = status.Name,
+                }).Where(l => l.StatusName == "Created").ToListAsync());
     }
     
 }
