@@ -13,7 +13,7 @@ public class CreateController : BaseController
         _context = context;
     }
     [HttpPost("[controller]")]
-    public async Task<ActionResult<Lead>> CreateLead(RequestSet request)
+    public async Task<ActionResult<Response>> CreateLead(RequestSet request)
     {
         Lead lead = new Lead
         {
@@ -32,7 +32,20 @@ public class CreateController : BaseController
         await _context.SaveChangesAsync();
         
         
-        return Ok(lead);
+        return Ok(new Response
+        {
+            LeadId = lead.Id,
+            LeadFirstName = lead.Name,
+            LeadSuburb = lead.Suburb,
+            LeadZipCode = lead.ZipCode,
+            LeadCategory = lead.Category,
+            LeadDescription = lead.Description,
+            LeadPrice = lead.Price,
+            LeadCreatedAt = lead.CreatedAt,
+            LeadUpdatedAt = lead.UpdatedAt,
+            StatusId = lead.Status.Id,
+            StatusName = lead.Status.Name
+        });
     }
     
 }
