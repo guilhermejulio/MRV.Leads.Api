@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MRV.Leads.Api.Models;
+using MRV.Leads.Api.Services;
 
 namespace MRV.Leads.Api.Controllers.Leads.UpdateStatus;
 
@@ -7,10 +8,12 @@ namespace MRV.Leads.Api.Controllers.Leads.UpdateStatus;
 public class UpdateStatusController : BaseController
 {
     private readonly DataContext _context;
+    private IMailService _mailService;
 
-    public UpdateStatusController(DataContext context)
+    public UpdateStatusController(DataContext context, IMailService mailService)
     {
         _context = context;
+        _mailService = mailService;
     }
     [HttpPut("[controller]/accept/{id}")]
     public async Task<ActionResult<AcceptResponse>> AcceptLead(int id)
@@ -24,6 +27,9 @@ public class UpdateStatusController : BaseController
         lead.Status = acceptedStatus;
         lead.UpdatedAt = DateTime.Now;
         await _context.SaveChangesAsync();
+
+        await _mailService.SendEmailAsync("vendas@test.com", "New accepted lead",
+            $"<h1>Lead ID: {id} are accepted</h1>");
 
         return Ok(new AcceptResponse
         {
